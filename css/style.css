@@ -1,0 +1,421 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    line-height: 1.5;
+}
+
+html {
+    scroll-padding-top: 60px;
+    scroll-behavior: smooth;
+}
+
+body {
+    font-family: 'Roboto', sans-serif;
+}
+
+a {
+    text-decoration: none;
+    color: unset;
+}
+
+.navbar, .hero-banner {
+    font-family: 'Questrial', sans-serif;
+    color: white;
+}
+
+.navbar {
+    z-index: 1;
+    height: 60px;
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 5px 10px;
+    position: fixed;
+    border-bottom: 2px solid #FEA837;
+    box-shadow: rgba(0, 0, 0, 0.16) 0px 3px 6px 0px, rgba(0, 0, 0, 0.23) 0px 3px 6px 0px;
+    background: linear-gradient(180deg, rgba(2,0,36,0.6699054621848739) 0%, rgba(50,50,56,0.3169642857142857) 100%);
+}
+
+.navbar .logo {
+    display: flex;
+    align-items: center;
+}
+
+.navbar .logo img {
+    width: 2.5rem;
+}
+
+.navbar .new-job {
+    color: #FEA837;
+    text-decoration: underline;
+    font-weight: bold;
+}
+
+.hero-banner {
+    height: 550px;
+    padding: 80px 20px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    background: linear-gradient( rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5) ), url("../assets/frankie-cordoba-fPYJeMmYWM4-unsplash.jpg");
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;
+}
+
+.hero-banner h1 {
+    font-size: 5rem;
+    text-decoration: underline;
+}
+
+.hero-banner p {
+    text-align: center;
+    margin-bottom: 16px;
+}
+
+.btn {
+    font-weight: bold;
+    color: white;
+    background: #84495F;
+    padding: 0.3rem 1rem;
+    border: 3px solid black;
+    box-shadow: 0 0 0 black;
+    transition: all 0.2s;
+}
+
+.btn:hover {
+    box-shadow: 0.4rem 0.4rem 0 #593E67;
+    transform: translate(-0.4rem, -0.4rem);
+    outline: unset;
+}
+
+.jobs-section {
+    padding: 30px 16px;
+    background-color: #fac784;
+}
+
+.search-inputs {
+    display: flex;
+    flex-direction: column;
+    margin-bottom: 10px;
+}
+
+.search-inputs input, .search-inputs select {
+    margin-bottom: 4px;
+    padding: 8px;
+    border-radius: 8px;
+    border: 2px solid #593E67;
+    font-size: 16px;
+}
+
+.filter-options {
+    display: flex;
+    overflow: auto;
+    padding-bottom: 6px;
+}
+
+.filter-options select {
+    margin-right: 8px;
+    padding: 5px;
+    border-radius: 8px;
+    border: 1px solid #593E67;
+    font-size: 14px;
+}
+
+.filter-options::-webkit-scrollbar {
+    -webkit-appearance: none;
+    appearance: none;
+}
+
+.filter-options::-webkit-scrollbar:horizontal {
+    height: 6px;
+}
+
+.filter-options::-webkit-scrollbar-thumb {
+    background-color: rgba(0, 0, 0, .5);
+    border-radius: 10px;
+}
+
+.jobs-container {
+    margin-top: 8px;
+}
+
+.jobs-container .jobs-found {
+    color: rgb(36, 36, 36);
+    font-size: .90rem;
+}
+
+.card-container {
+    justify-content: center;
+}
+
+.card-container .card {
+    padding: 10px;
+    padding-left: 16px;
+    margin-top: 16px;
+    border: 2px solid #B85B56;
+    border-left: 5px solid #B85B56;
+    border-radius: 8px;
+    background-color: white;
+}
+
+.card-container .card .job-title {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    font-size: 14px;
+}
+
+.card-container .card .btn-see-job {
+    border: none;
+    background-color: transparent;
+    font-size: 20px;
+    cursor: pointer;
+}
+
+.card-container .card .btn-see-job:hover {
+    color: #B85B56;
+}
+
+.card-container .card:hover h2 {
+    text-decoration: underline;
+}
+
+.card-container .card .job-type, .card-container .card .tags {
+    margin-bottom: 8px;
+}
+
+.card-container .card .tags .tag {
+    background-color: #fac784;
+    padding: 0.20rem 0.5rem;
+    font-size: 0.80rem;
+    border-radius: 15px;
+    font-weight: bold;
+    color: #611d0c;
+}
+
+.card-container .card .date {
+    color: rgb(36, 36, 36);
+    font-size: .80rem;
+}
+
+.job-data {
+    min-height: calc(100vh - 30px);
+    background-color: #fac784;
+}
+
+.job-info {
+    padding: 10px;
+    background-color: #fac784;
+}
+
+.job-data .job-image {
+    height: 150px;
+    background-image: linear-gradient( rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5) ), url(../assets/dylan-mullins-RMlrnfuORb4-unsplash.jpg);
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+}
+
+.job-data .job-image .btn-job {
+    padding: 70px 10px;
+    display: flex;
+    justify-content: space-between;
+    font-size: 1.5rem;
+    color: white;
+}
+
+.job-data .job-title {
+    padding: 16px 0;
+    border-bottom: 1px solid #c4c3c3;
+    border-radius: 8px;
+    border-bottom-left-radius: 0px;
+    border-bottom-right-radius: 0px;
+    border: 2px solid #B85B56;
+    border-bottom: unset;
+}
+
+.job-data .job-title h2 {
+    margin-bottom: 8px;
+}
+
+.job-data .job-title .date {
+    margin-top: 5px;
+    color: rgb(36, 36, 36);
+    font-size: .90rem;
+}
+
+.job-data .employment-data {
+    text-decoration: underline;
+    text-underline-offset: 3px;
+}
+
+.job-data .job-description {
+    padding: 16px 0;
+    border-radius: 8px;
+    border-top-left-radius: 0px;
+    border-top-right-radius: 0px;
+    border: 2px solid #B85B56;
+    border-top: unset;
+}
+
+.job-data .job-description p {
+    margin-bottom: 10px;
+}
+
+.job-data .job-title, .job-data .job-description {
+    background-color: white;
+    padding: 5px;
+}
+
+.job-info .delete-container {
+    background-color: white;
+    padding: 10px;
+    border-radius: 8px;
+}
+
+.job-info .delete-container span {
+    font-weight: bold;
+    color: #611d0c;
+    text-decoration: underline;
+}
+
+.job-info .delete-container .delete-btns {
+    display: flex;
+    justify-content: space-evenly;
+    margin-top: 8px;
+}
+
+.job-info .delete-container button {
+    padding: 5px 30px;
+    font-weight: bold;
+    border: 2px solid #611d0c;
+    background-color: #fac784;
+    border-radius: 8px;
+    color: black;
+}
+
+.btn-return {
+    border: none;
+    background-color: transparent;
+    font-size: 20px;
+    color: white;
+}
+
+.btn-return:hover {
+    color: #FEA837;
+}
+
+.dropdown {
+    position: absolute;
+    display: inline-block;
+    right: 0.4em;
+}
+
+.menu-icon {
+    position: fixed;
+}
+
+.btn-right {
+    right: 0.4em;
+}
+
+.dropdown-menu {
+    display: none;
+    position: relative;
+    flex-direction: column;
+    margin-top: 30px;
+    background-color: #f9f9f9;
+    overflow: auto;
+    box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+    z-index: 2;
+}
+
+.dropdown-menu a {
+    color: black;
+    padding: 8px 20px;
+    text-decoration: none;
+    display: block;
+    font-size: 16px;
+    border-bottom: 1px solid darkgrey;
+}
+
+.job-form {
+    background-color: #fac784;
+    padding: 30px 16px;
+    padding-top: 80px;
+    min-height: calc(100vh - 30px);
+}
+
+.job-form form {
+    padding: 10px;
+    padding-left: 16px;
+    border-radius: 8px;
+    border: 2px solid #B85B56;
+    background-color: white;
+}
+
+.job-form form div {
+    margin: 10px 0;
+}
+
+.job-form .form-title {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.job-form .form-title .exit-form {
+    background-color: white;
+    border: none;
+}
+
+.job-form .form-title .exit-form:hover {
+    color: #84495F;
+}
+
+.job-form .form-title i {
+    font-size: 2rem;
+}
+
+.job-form .input-container {
+    display: flex;
+    flex-direction: column;
+    width: 90%;
+}
+
+.job-form .input-container input, .input-container select, .input-container textarea {
+    padding: 5px;
+    border-radius: 8px;
+    border: 1px solid black;
+}
+
+.job-form .btn-container {
+    display: flex;
+    margin-top: 16px;
+}
+
+.job-form .btn-container input {
+    margin-right: 8px;
+}
+
+.hide {
+    display: none;
+}
+
+.show {
+    display: block;
+}
+
+footer {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 30px;
+    background-color: #B85B56;
+    font-weight: 400;
+    color: white;
+}
