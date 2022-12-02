@@ -36,7 +36,7 @@
                         <select name="location" id="">
                             <option value="">All Locations</option>
                         </select>
-                        <input type="submit" class="main-submit">
+                        <input type="submit" class="main-submit" value="Send">
                     </div>
                     <div class="filter-options">
                         <select name="order-by" id="">
@@ -81,23 +81,6 @@
                 <section class="jobs-container">
                     <p class="jobs-found">0 jobs</p>
                     <div class="card-container">
-                        <div class="card">
-                            <div class="job-title">
-                                <h2>Architect</h2>
-                                <a href="#jobData" class="btn-see-job">
-                                    <i class="fa-solid fa-arrow-right"></i>
-                                </a>
-                            </div>
-                            <p class="company-name">AI & ML Architect</p>
-                            <p class="job-type">United States</p>
-                            <div class="tags">
-                                <span class="tag">Full-Time</span>
-                                <span class="tag">Experienced</span>
-                                <span class="tag">Remote</span>
-                                <span class="tag">Applied Art</span>
-                            </div>
-                            <p class="date">posted 24/11/2022</p>
-                        </div>
                     </div>
                 </section>
             </div>
@@ -105,42 +88,9 @@
     </section>
     <section class="job-data hide" id="jobData">
         <div class="job-image">
-            <div class="btn-job">
-                <button class="btn-return">
-                    <i class="fa-solid fa-arrow-left"></i>
-                </button>
-                <div class="dropdown">
-                    <i class="menu-icon btn-right fa-solid fa-ellipsis-vertical"></i>
-                    <div id="dropdown-menu" class="dropdown-menu">
-                        <a id="editJob">Edit</a>
-                        <a id="deleteJob">Delete</a>
-                    </div>
-                </div>
-            </div>
+            <div class="btn-job"></div>
         </div>
-        <div class="job-info">
-            <div class="job-title">
-                <h2>Arquitecto</h2>
-                <p>AI & ML Architect</p>
-                <p>United States <span>📌</span></p>
-                <p class="date">posted 24/11/2022</p>
-            </div>
-            <div class="job-description">
-                <p>salary</p>
-                <div class="employment">
-                    <p>
-                        <span class="employment-data">Type:</span> <span>Full-Time</span>
-                    </p>
-                    <p>
-                        <span class="employment-data">Remote:</span> <span>No</span>
-                    </p>
-                    <p>
-                        <span class="employment-data">Experience:</span> <span>Needed</span>
-                    </p>
-                </div>
-                <p>As a bold global technology leader, our products and services touch the lives of millions, as well as lending a huge helping hand to some of the country's most crucial organisations. From contactless payments to connecting emergency services, our technology delivers some truly exciting initiatives, not to mention the incredible connections we make on a global level every single day. We rely on the brightest sparks to help us deliver new innovations. So, if you believe, like we do, that technology can help us imagine, create and realize a more connected future, then we need you to help us achieve that goal! We're focused on building the best network, providing a knockout digital experience and giving back the very best to our customers. Not bad for a company you thought was just a mobile network provider, right? We're here to prove we're no one trick pony and our technology reach goes way further than you imagined. Read on to find out just how far.... The Solution Architect is responsible for the design and development of the information technology solutions and mapping the business requirements to systems/technical requirements to ensure they are in line with the enterprise architectural plan.</p>
-            </div>
-        </div>
+        <div class="job-info"></div>
     </section>
     <section class="job-form hide">
         <form>
@@ -152,15 +102,15 @@
             </div>
             <div class="input-container">
                 <label for="company-name">Company</label>
-                <input type="text" id="company-name" placeholder="Company name">
+                <input type="text" id="company-name" placeholder="Company name" required>
             </div>
             <div class="input-container">
                 <label for="job-name">Job</label>
-                <input type="text" id="job-name" placeholder="ex. Architect">
+                <input type="text" id="job-name" placeholder="ex. Architect" required>
             </div>
             <div class="input-container">
                 <label for="job-location">Location</label>
-                <input type="text" id="job-location" placeholder="ex. United States">
+                <input type="text" id="job-location" placeholder="ex. United States" required>
             </div>
             <div class="input-container">
                 <label for="job-type">Type</label>
@@ -203,10 +153,10 @@
             </div>
             <div class="input-container">
                 <label for="job-description">Description</label>
-                <textarea name="job-description" id="job-description" cols="25" rows="5" placeholder="Job description..."></textarea>
+                <textarea name="job-description" id="job-description" cols="25" rows="5" placeholder="Job description..." required></textarea>
             </div>
             <div class="btn-container">
-                <input type="submit" class="btn">
+                <input type="submit" class="btn" value="Send">
                 <button class="btn">Cancel</button>
             </div>
         </form>
