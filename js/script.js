@@ -78,11 +78,20 @@ const formatDate = (date) => {
     return getDate.join("/")
 }
 
+const getLocationsOfJobs = (jobs) => {
+    const locations = []
+    for (const { location } of jobs) {
+        if (!locations.includes(location)) locations.push(location)
+    }
+    return locations
+}
+
 const callDataForCards = () => {
     $(".jobs-found").innerHTML = '0 jobs'
     showSpinner(".card-container")
     getJobs().then(data => {
         setTimeout(() => {
+            setLocationsInSelect(getLocationsOfJobs(data))
             generateCards(data)
         }, 2000);
     })
@@ -126,6 +135,14 @@ const closingForm = () => {
 }
 
 // DOM
+
+const setLocationsInSelect = (locations) => {
+    $("#search-location").innerHTML = '<option value="All">All Locations</option>'
+    for (const location of locations) {
+        $("#search-location").innerHTML += 
+        `<option value="${location}">${location}</option>`
+    }
+}
 
 const generateCards = (jobs) => {
     $(".card-container").innerHTML = ""
