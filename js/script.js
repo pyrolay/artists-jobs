@@ -37,6 +37,11 @@ const showSpinner = (document) => {
     `
 }
 
+const capitalizeString = (string) => {
+    const result = string.charAt(0).toUpperCase() + string.slice(1)
+    return result
+}
+
 // Async functions
 
 const getJobs = async (jobId = "") => {
@@ -45,9 +50,36 @@ const getJobs = async (jobId = "") => {
     return jobs
 }
 
+const addJob = () => {
+    fetch('https://637ebce4cfdbfd9a63b65e2f.mockapi.io/jobs', {
+        method: 'POST', 
+        headers: {
+            'Content-Type': 'Application/json'
+        },
+        body: JSON.stringify(saveJob())
+    }).finally(() => {
+        hideElement(".job-form")
+        showElement(".main-section")
+        callDataForCards()
+    })
+}
+
 // Functions
 
+const getTodaysDate = () => {
+    const newDate = new Date()
+    const today = [newDate.getMonth() + 1, newDate.getDate(), newDate.getFullYear()]
+    return today.join("-")
+}
+
+const formatDate = (date) => {
+    date = new Date(date)
+    const getDate = [date.getDate(), date.getMonth() + 1, date.getFullYear()]
+    return getDate.join("/")
+}
+
 const callDataForCards = () => {
+    $(".jobs-found").innerHTML = '0 jobs'
     showSpinner(".card-container")
     getJobs().then(data => {
         setTimeout(() => {
@@ -55,6 +87,23 @@ const callDataForCards = () => {
         }, 2000);
     })
 }
+
+const saveJob = () => {
+    return {
+        company: capitalizeString($("#company-name").value),
+        name: capitalizeString($("#job-name").value),
+        description: capitalizeString($("#job-description").value),
+        location: capitalizeString($("#job-location").value),
+        category: $("#job-category").value,
+        experience: $("#experience-radio").checked,
+        salary: $("#job-salary").value,
+        posted: getTodaysDate(),
+        remote: $("#remote-radio").checked,
+        type: $("#job-type").value,
+    }
+}
+
+// Navigation functions
 
 const showDropdown = () => {
     $(".dropdown-menu").classList.toggle("show")
@@ -67,6 +116,13 @@ const setBtnReturn = () => {
         showElement(".main-section")
         callDataForCards()
     })
+}
+
+const closingForm = () => {
+    hideElement(".job-data")
+    hideElement(".job-form")
+    showElement(".main-section")
+    callDataForCards()
 }
 
 // DOM
@@ -92,7 +148,7 @@ const generateCards = (jobs) => {
                     ${remote ? '<span class="tag">Remote</span>' : ""}
                     <span class="tag">${category}</span>
                 </div>
-                <p class="date">posted ${posted}</p>
+                <p class="date">posted ${formatDate(posted)}</p>
             </div>
         `
     }
@@ -188,6 +244,11 @@ const deleteJobDOM = () => {
 
 // Navigation events
 
+$("#form").addEventListener("submit", (e) => {
+    e.preventDefault()
+    addJob()
+})
+
 $("#openNewJobForm").addEventListener("click", (e) => {
     e.preventDefault()
     hideElement(".main-section")
@@ -195,12 +256,9 @@ $("#openNewJobForm").addEventListener("click", (e) => {
     showElement(".job-form")
 })
 
-$(".exit-form").addEventListener("click", (e) => {
-    e.preventDefault()
-    hideElement(".job-data")
-    hideElement(".job-form")
-    showElement(".main-section")
-})
+$(".exit-form").addEventListener("click", () => closingForm())
+
+$(".cancelFormBtn").addEventListener("click", (e) => closingForm())
 
 // Window events
 
