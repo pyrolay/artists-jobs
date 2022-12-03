@@ -93,10 +93,10 @@
         <div class="job-info"></div>
     </section>
     <section class="job-form hide">
-        <form>
+        <form id="form">
             <div class="form-title">
                 <h2>New Job</h2>
-                <button class="exit-form">
+                <button type="button" class="exit-form">
                     <i class="fa-solid fa-xmark"></i>
                 </button>
             </div>
@@ -113,42 +113,46 @@
                 <input type="text" id="job-location" placeholder="ex. United States" required>
             </div>
             <div class="input-container">
+                <label for="job-salary">Salary</label>
+                <input type="text" id="job-salary">
+            </div>
+            <div class="input-container">
                 <label for="job-type">Type</label>
                 <select name="" id="job-type">
-                    <option value="">Full-Time</option>
-                    <option value="">Part-Time</option>
-                    <option value="">Contract</option>
-                    <option value="">Temporary</option>
-                    <option value="">Contract To Hire</option>
+                    <option value="Full-Time">Full-Time</option>
+                    <option value="Part-Time">Part-Time</option>
+                    <option value="Contract">Contract</option>
+                    <option value="Temporary">Temporary</option>
+                    <option value="Contract To Hire">Contract To Hire</option>
                 </select>
             </div>
             <div class="radio-container">
                 <p>Experience</p>
-                <input type="radio" id="experience-radio" name="experience" value="1" checked>
+                <input type="radio" id="experience-radio" name="experience" value="true" checked>
                 <label for="experience-radio">Yes</label>
-                <input type="radio" id="experience-radio" name="experience" value="2">
-                <label for="radio" id="experience-radio" name="experience">No</label>
+                <input type="radio" id="experience-radio" name="experience" value="false">
+                <label for="radio" id="experience-radio" name="experience">False</label>
             </div>
             <div class="radio-container">
                 <p>Remote</p>
-                <input type="radio" id="remote-radio" name="remote" value="1" checked>
+                <input type="radio" id="remote-radio" name="remote" value="true" checked>
                 <label for="remote-radio">Yes</label>
-                <input type="radio" id="remote-radio" name="remote" value="2">
+                <input type="radio" id="remote-radio" name="remote" value="false">
                 <label for="remote-radio">No</label>
             </div>
             <div class="input-container">
                 <label for="job-category">Category</label>
                 <select name="job-category" id="job-category">
-                    <option value="">Applied Art</option>
-                    <option value="">Art Education</option>
-                    <option value="">Fine Art</option>
-                    <option value="">Culinary</option>
-                    <option value="">Digital Art</option>
-                    <option value="">Drama & Theatre</option>
-                    <option value="">Film & Television</option>
-                    <option value="">Music</option>
-                    <option value="">Performing Arts</option>
-                    <option value="">Photography</option>
+                    <option value="Applied Art">Applied Art</option>
+                    <option value="Art Education">Art Education</option>
+                    <option value="Fine Art">Fine Art</option>
+                    <option value="Culinary">Culinary</option>
+                    <option value="Digital Art">Digital Art</option>
+                    <option value="Drama & Theatre">Drama & Theatre</option>
+                    <option value="Film & Television">Film & Television</option>
+                    <option value="Music">Music</option>
+                    <option value="Performing Arts">Performing Arts</option>
+                    <option value="Photography">Photography</option>
                 </select>
             </div>
             <div class="input-container">
@@ -156,8 +160,8 @@
                 <textarea name="job-description" id="job-description" cols="25" rows="5" placeholder="Job description..." required></textarea>
             </div>
             <div class="btn-container">
-                <input type="submit" class="btn" value="Send">
-                <button class="btn">Cancel</button>
+                <input type="submit" class="btn submitBtn" value="Send">
+                <button type="button" class="btn cancelFormBtn">Cancel</button>
             </div>
         </form>
     </section>
