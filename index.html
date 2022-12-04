@@ -15,9 +15,9 @@
     <header>
         <nav class="navbar">
             <a href="" class="logo">
-                <img src="assets/icons8-paint-palette-with-brush-48.png" alt="Photo of Frankie Cordoba from Unsplash">
+                <img src="assets/icons8-paint-palette-with-brush-48.png" alt="logo">
             </a>
-            <a class="new-job" id="openNewJobForm">Add new job</a>
+            <a href="#openForm" class="new-job" id="openNewJobForm">Add new job</a>
         </nav>
     </header>
     <section class="main-section">
@@ -92,10 +92,10 @@
         </div>
         <div class="job-info"></div>
     </section>
-    <section class="job-form hide">
+    <section class="job-form hide" id="openForm">
         <form id="form">
             <div class="form-title">
-                <h2>New Job</h2>
+                <h2 class="form-change">New Job</h2>
                 <button type="button" class="exit-form">
                     <i class="fa-solid fa-xmark"></i>
                 </button>
@@ -128,17 +128,17 @@
             </div>
             <div class="radio-container">
                 <p>Experience</p>
-                <input type="radio" id="experience-radio" name="experience" value="true" checked>
-                <label for="experience-radio">Yes</label>
-                <input type="radio" id="experience-radio" name="experience" value="false">
-                <label for="radio" id="experience-radio" name="experience">False</label>
+                <input type="radio" id="experience-yes" class="experience-radio" name="experience" value="true" checked>
+                <label for="experience-yes">Yes</label>
+                <input type="radio" id="experience-no" class="experience-radio" name="experience" value="false">
+                <label for="experience-no">No</label>
             </div>
             <div class="radio-container">
                 <p>Remote</p>
-                <input type="radio" id="remote-radio" name="remote" value="true" checked>
-                <label for="remote-radio">Yes</label>
-                <input type="radio" id="remote-radio" name="remote" value="false">
-                <label for="remote-radio">No</label>
+                <input type="radio" id="remote-yes" class="remote-radio" name="remote" value="true" checked>
+                <label for="remote-yes">Yes</label>
+                <input type="radio" id="remote-no" class="remote-radio" name="remote" value="false">
+                <label for="remote-no">No</label>
             </div>
             <div class="input-container">
                 <label for="job-category">Category</label>
@@ -161,7 +161,9 @@
             </div>
             <div class="btn-container">
                 <input type="submit" class="btn submitBtn" value="Send">
-                <button type="button" class="btn cancelFormBtn">Cancel</button>
+                <button type="button" class="btn cancelFormBtn">
+                    <a href="#jobData">Cancel</a>
+                </button>
             </div>
         </form>
     </section>

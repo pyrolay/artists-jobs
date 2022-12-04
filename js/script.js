@@ -2,6 +2,8 @@
 const $ = (selector) => document.querySelector(selector)
 const $$ = (selector) => document.querySelectorAll(selector)
 
+// 
+
 // Global Helper Functions
 const hideElement = (document) => {
     $(`${document}`).classList.remove("show")
@@ -42,6 +44,20 @@ const capitalizeString = (string) => {
     return result
 }
 
+let editJobSection = false
+
+const formNewOrEdit = (jobId = "") => {
+    if (editJobSection) {
+        $(".form-change").innerText = "Edit Job"
+        $(".exit-form").classList.add("hide")
+        editJobInputs(jobId)
+    } else {
+        $(".form-change").innerText = "New Job"
+        $(".exit-form").classList.remove("hide")
+        $("#form").reset()
+    }
+}
+
 // Async functions
 
 const getJobs = async (jobId = "") => {
@@ -53,6 +69,20 @@ const getJobs = async (jobId = "") => {
 const addJob = () => {
     fetch('https://637ebce4cfdbfd9a63b65e2f.mockapi.io/jobs', {
         method: 'POST', 
+        headers: {
+            'Content-Type': 'Application/json'
+        },
+        body: JSON.stringify(saveJob())
+    }).finally(() => {
+        hideElement(".job-form")
+        showElement(".main-section")
+        callDataForCards()
+    })
+}
+
+const editJob = (id) => {
+    fetch(`https://637ebce4cfdbfd9a63b65e2f.mockapi.io/jobs/${id}`, {
+        method: "PUT", 
         headers: {
             'Content-Type': 'Application/json'
         },
@@ -86,6 +116,16 @@ const getLocationsOfJobs = (jobs) => {
     return locations
 }
 
+const setCheckedToSameValue = (input, value) => {
+    if (value) {
+        $(`#${input}-yes`).checked = true
+        $(`#${input}-no`).checked = false
+    } else {
+        $(`#${input}-no`).checked = true
+        $(`#${input}-yes`).checked = false
+    }
+}
+
 const callDataForCards = () => {
     $(".jobs-found").innerHTML = '0 jobs'
     showSpinner(".card-container")
@@ -97,6 +137,19 @@ const callDataForCards = () => {
     })
 }
 
+const editJobInputs = (job) => {
+    const { company, name, description, location, category, experience, salary, remote, type } = job
+    $("#company-name").value = company
+    $("#job-name").value = name
+    $("#job-description").value = description
+    $("#job-location").value = location
+    $("#job-category").value = category
+    setCheckedToSameValue("experience", experience)
+    $("#job-salary").value = salary
+    setCheckedToSameValue("remote", remote)
+    $("#job-type").value = type
+}
+
 const saveJob = () => {
     return {
         company: capitalizeString($("#company-name").value),
@@ -104,10 +157,10 @@ const saveJob = () => {
         description: capitalizeString($("#job-description").value),
         location: capitalizeString($("#job-location").value),
         category: $("#job-category").value,
-        experience: $("#experience-radio").checked,
+        experience: $(".experience-radio").checked,
         salary: $("#job-salary").value,
         posted: getTodaysDate(),
-        remote: $("#remote-radio").checked,
+        remote: $(".remote-radio").checked,
         type: $("#job-type").value,
     }
 }
@@ -115,7 +168,12 @@ const saveJob = () => {
 // Navigation functions
 
 const showDropdown = () => {
-    $(".dropdown-menu").classList.toggle("show")
+    if ($(".dropdown-menu").classList.contains("show")) {
+        $(".dropdown-menu").classList.remove("show")
+    } else {
+        $(".dropdown-menu").classList.add("show")
+    }
+
 }
 
 const setBtnReturn = () => {
@@ -127,11 +185,15 @@ const setBtnReturn = () => {
     })
 }
 
-const closingForm = () => {
+const closingNewJobForm = () => {
     hideElement(".job-data")
     hideElement(".job-form")
     showElement(".main-section")
     callDataForCards()
+}
+
+const closingEditJobForm = () => {
+
 }
 
 // DOM
@@ -241,9 +303,13 @@ const generateJob = (jobId) => {
     })
     
     $("#editJob").addEventListener("click", () => {
+        $(".submitBtn").setAttribute("data-id", id)
+        $(".cancelFormBtn").setAttribute("data-id", id)
         hideElement(".main-section")
         hideElement(".job-data")
         showElement(".job-form")
+        editJobSection = true
+        formNewOrEdit(jobId)
     })
 }
 
@@ -263,19 +329,27 @@ const deleteJobDOM = () => {
 
 $("#form").addEventListener("submit", (e) => {
     e.preventDefault()
-    addJob()
+    const jobId = $(".submitBtn").getAttribute("data-id")
+    if (editJobSection) editJob(jobId)
+    else addJob()
 })
 
-$("#openNewJobForm").addEventListener("click", (e) => {
-    e.preventDefault()
+$("#openNewJobForm").addEventListener("click", () => {
     hideElement(".main-section")
     hideElement(".job-data")
     showElement(".job-form")
+    editJobSection = false
+    formNewOrEdit()
 })
 
-$(".exit-form").addEventListener("click", () => closingForm())
+$(".exit-form").addEventListener("click", () => closingNewJobForm())
 
-$(".cancelFormBtn").addEventListener("click", (e) => closingForm())
+$(".cancelFormBtn").addEventListener("click", () => {
+    if (editJobSection) {
+        hideElement(".job-form")
+        showElement("#jobData")
+    } else closingNewJobForm()
+})
 
 // Window events
 
