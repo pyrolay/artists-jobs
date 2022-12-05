@@ -80,8 +80,8 @@ const addJob = () => {
     })
 }
 
-const editJob = (id) => {
-    fetch(`https://637ebce4cfdbfd9a63b65e2f.mockapi.io/jobs/${id}`, {
+const editJob = (jobId) => {
+    fetch(`https://637ebce4cfdbfd9a63b65e2f.mockapi.io/jobs/${jobId}`, {
         method: "PUT", 
         headers: {
             'Content-Type': 'Application/json'
@@ -92,6 +92,12 @@ const editJob = (id) => {
         showElement(".main-section")
         callDataForCards()
     })
+}
+
+const deleteJob = (jobId) => {
+    fetch(`https://637ebce4cfdbfd9a63b65e2f.mockapi.io/jobs/${jobId}`, {
+        method: "DELETE"
+    }).finally(() => goBackHome())
 }
 
 // Functions
@@ -185,16 +191,14 @@ const setBtnReturn = () => {
     })
 }
 
-const closingNewJobForm = () => {
+const goBackHome = () => {
     hideElement(".job-data")
     hideElement(".job-form")
     showElement(".main-section")
     callDataForCards()
 }
 
-const closingEditJobForm = () => {
 
-}
 
 // DOM
 
@@ -299,7 +303,7 @@ const generateJob = (jobId) => {
     $(".menu-icon").addEventListener("click", () => showDropdown())
 
     $("#deleteJob").addEventListener("click", () => {
-        deleteJobDOM()
+        deleteJobFunction(id)
     })
     
     $("#editJob").addEventListener("click", () => {
@@ -313,16 +317,21 @@ const generateJob = (jobId) => {
     })
 }
 
-const deleteJobDOM = () => {
-    $(".job-info").innerHTML = ` 
-        <div class="delete-container">
-            <p>Are you sure you want to delete the <span>"Architect"</span> job?</p>
-            <div class="delete-btns">
-                <button class="delete-btn btn">Delete</button>
-                <button class="cancel-btn btn">Cancel</button>
-            </div>
-        </div>
-    `
+const deleteJobFunction = (id) => {
+    hideElement(".job-info")
+    showElement(".delete-container")
+
+    $(".delete-btn").setAttribute("data-id", id)
+
+    $(".delete-btn").addEventListener("click", () => {
+        const id = $(".delete-btn").getAttribute("data-id")
+        deleteJob(id)
+    })
+
+    $(".cancel-btn").addEventListener("click", () => {
+        hideElement(".delete-container")
+        showElement(".job-info")
+    })
 }
 
 // Navigation events
@@ -342,13 +351,13 @@ $("#openNewJobForm").addEventListener("click", () => {
     formNewOrEdit()
 })
 
-$(".exit-form").addEventListener("click", () => closingNewJobForm())
+$(".exit-form").addEventListener("click", () => goBackHome())
 
 $(".cancelFormBtn").addEventListener("click", () => {
     if (editJobSection) {
         hideElement(".job-form")
         showElement("#jobData")
-    } else closingNewJobForm()
+    } else goBackHome()
 })
 
 // Window events
