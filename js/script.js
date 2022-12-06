@@ -171,6 +171,7 @@ const saveJob = () => {
     }
 }
 
+
 // Navigation functions
 
 const showDropdown = () => {
@@ -198,6 +199,15 @@ const goBackHome = () => {
     callDataForCards()
 }
 
+const scroll = () => {
+    if ($("#jobData").classList.contains("show") & window.pageYOffset > 90) {
+        $(".menu-icon").style.position = "unset"
+        $(".btn-return").style.position = "unset"
+    } else if ($("#jobData").classList.contains("show")) {
+        $(".menu-icon").style.position = "fixed"
+        $(".btn-return").style.position = "fixed"
+    }
+}
 
 
 // DOM
@@ -358,6 +368,10 @@ $(".cancelFormBtn").addEventListener("click", () => {
         hideElement(".job-form")
         showElement("#jobData")
     } else goBackHome()
+})
+
+window.addEventListener("scroll", () => {
+    scroll()
 })
 
 // Window events
