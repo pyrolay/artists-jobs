@@ -30,52 +30,55 @@
         </section>
         <section class="jobs-section" id="jobs-section">
             <div class="jobs-view">
-                <form>
+                <form class="filter-form">
                     <div class="search-inputs">
-                        <input type="text" placeholder="What are you looking for?">
+                        <input type="text" id="search-name" placeholder="What are you looking for?">
                         <select name="location" id="search-location">
                             <option value="all">All Locations</option>
                         </select>
-                        <input type="submit" class="main-submit" value="Send">
                     </div>
                     <div class="filter-options">
-                        <select name="order-by" id="">
-                            <option value="">Most recent</option>
-                            <option value="">Last recent</option>
-                            <option value="">A/Z</option>
-                            <option value="">Z/A</option>
+                        <select name="order-by" id="orderBy">
+                            <option value="1">Most recent</option>
+                            <option value="2">Last recent</option>
+                            <option value="3">A/Z</option>
+                            <option value="4">Z/A</option>
                         </select>
-                        <select name="" id="">
-                            <option value="">All Categories</option>
-                            <option value="">Applied Art</option>
-                            <option value="">Art Education</option>
-                            <option value="">Fine Art</option>
-                            <option value="">Culinary</option>
-                            <option value="">Digital Art</option>
-                            <option value="">Drama & Theatre</option>
-                            <option value="">Film & Television</option>
-                            <option value="">Music</option>
-                            <option value="">Performing Arts</option>
-                            <option value="">Photography</option>
+                        <select name="category" id="category">
+                            <option value="All">All Categories</option>
+                            <option value="Applied Art">Applied Art</option>
+                            <option value="Art Education">Art Education</option>
+                            <option value="Fine Art">Fine Art</option>
+                            <option value="Culinary">Culinary</option>
+                            <option value="Digital Art">Digital Art</option>
+                            <option value="Drama & Theatre">Drama & Theatre</option>
+                            <option value="Film & Television">Film & Television</option>
+                            <option value="Music">Music</option>
+                            <option value="Performing Arts">Performing Arts</option>
+                            <option value="Photography">Photography</option>
                         </select>
-                        <select name="expericente" id="">
-                            <option value="">All Experience/No-Experience</option>
-                            <option value="">Experience</option>
-                            <option value="">No-Experience</option>
+                        <select name="experience" id="experience">
+                            <option value="All">All Experience/No-Experience</option>
+                            <option value="true">Experience</option>
+                            <option value="false">No-Experience</option>
                         </select>
-                        <select name="" id="">
-                            <option value="">All Remote/In-Person</option>
-                            <option value="">Remote</option>
-                            <option value="">In-Person</option>
+                        <select name="remote" id="remote">
+                            <option value="All">All Remote/In-Person</option>
+                            <option value="true">Remote</option>
+                            <option value="false">In-Person</option>
                         </select>
-                        <select name="" id="">
-                            <option value="">All Employment Types</option>
-                            <option value="">Full-Time</option>
-                            <option value="">Part-Time</option>
-                            <option value="">Contract</option>
-                            <option value="">Temporary</option>
-                            <option value="">Contract To Hire</option>
+                        <select name="type" id="type">
+                            <option value="All">All Employment Types</option>
+                            <option value="Full-Time">Full-Time</option>
+                            <option value="Part-Time">Part-Time</option>
+                            <option value="Contract">Contract</option>
+                            <option value="Temporary">Temporary</option>
+                            <option value="Contract To Hire">Contract To Hire</option>
                         </select>
+                    </div>
+                    <div class="form-btns">
+                        <input type="submit" class="main-submit btn" value="Send">
+                        <input type="button" class="clean-form btn" value="Clean">
                     </div>
                 </form>
                 <section class="jobs-container">
