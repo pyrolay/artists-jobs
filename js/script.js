@@ -60,8 +60,8 @@ const formNewOrEdit = (jobId = "") => {
 
 // Async functions
 
-const getJobs = async (jobId = "") => {
-    const res = await fetch(`https://637ebce4cfdbfd9a63b65e2f.mockapi.io/jobs/${jobId}`)
+const getJobs = async (search = "") => {
+    const res = await fetch(`https://637ebce4cfdbfd9a63b65e2f.mockapi.io/jobs/${search}`)
     const jobs = await res.json()
     return jobs
 }
@@ -76,6 +76,7 @@ const addJob = () => {
     }).finally(() => {
         hideElement(".job-form")
         showElement(".main-section")
+        $(".filter-form").reset()
         callDataForCards()
     })
 }
@@ -90,6 +91,7 @@ const editJob = (jobId) => {
     }).finally(() => {
         hideElement(".job-form")
         showElement(".main-section")
+        $(".filter-form").reset()
         callDataForCards()
     })
 }
@@ -97,8 +99,12 @@ const editJob = (jobId) => {
 const deleteJob = (jobId) => {
     fetch(`https://637ebce4cfdbfd9a63b65e2f.mockapi.io/jobs/${jobId}`, {
         method: "DELETE"
-    }).finally(() => goBackHome())
+    }).finally(() => {
+        $(".filter-form").reset()
+        goBackHome()
+    })
 }
+
 
 // Functions
 
@@ -135,10 +141,10 @@ const setCheckedToSameValue = (input, value) => {
 const callDataForCards = () => {
     $(".jobs-found").innerHTML = '0 jobs'
     showSpinner(".card-container")
-    getJobs().then(data => {
+    getJobs().then(jobs => {
         setTimeout(() => {
-            setLocationsInSelect(getLocationsOfJobs(data))
-            generateCards(data)
+            setLocationsInSelect(getLocationsOfJobs(jobs))
+            searchByName(generateCards(jobs))
         }, 2000);
     })
 }
@@ -171,6 +177,87 @@ const saveJob = () => {
     }
 }
 
+
+// Filter Functions
+
+const searchByName = () => {
+    if ($("#search-name").value === "") {
+        getJobs().then((jobs) => filterByLocation(jobs))
+    } else {
+        const search = `?name=${$("#search-name").value}`
+        getJobs(search).then((jobs) => filterByLocation(jobs))
+    }
+}
+
+const filterByLocation = (jobsArr) => {
+    if ($("#search-location").value === "All") {
+        return filterByCategory(jobsArr)
+    } else {
+        const filterByLocation = jobsArr.filter(({ location }) => location === $("#search-location").value)
+        return filterByCategory(filterByLocation)
+    }
+}
+
+const filterByCategory = (jobsArr) => {
+    if ($("#category").value === "All") {
+        return filterByExperience(jobsArr)
+    } else {
+        const filterByCategory = jobsArr.filter(({ category }) => category === $("#category").value)
+        return filterByExperience(filterByCategory)
+    }
+}
+
+const filterByExperience = (jobsArr) => {
+    if ($("#experience").value === "All") {
+        return filterByRemote(jobsArr)
+    } else {
+        const filterByExperience = jobsArr.filter(({ experience }) => experience === $("#experience").value)
+        return filterByRemote(filterByExperience)
+    }
+}
+
+const filterByRemote = (jobsArr) => {
+    if ($("#remote").value === "All") {
+        return filterByEmploymentType(jobsArr)
+    } else {
+        const filterByRemote = jobsArr.filter(({ remote }) => remote === $("#remote").value)
+        return filterByEmploymentType(filterByRemote)
+    }
+}
+
+const filterByEmploymentType = (jobsArr) => {
+    if ($("#type").value === "All") {
+        return orderBy(jobsArr)
+    } else {
+        const filterByType = jobsArr.filter(({ type }) => type === $("#type").value)
+        return orderBy(filterByType)
+    }
+}
+
+const orderBy = (jobsArr) => {
+    const changeDate = (sort) => {
+        const date = new Date(sort.posted)
+        return date.getTime()
+    }
+
+    if ($("#orderBy").value === "1") jobsArr.sort((a, b) => changeDate(b) - changeDate(a))
+    if ($("#orderBy").value === "2") jobsArr.sort((a, b) => changeDate(a) - changeDate(b))
+
+    if ($("#orderBy").value === "3") {
+        jobsArr.sort((a, b) => {
+            if (a.name < b.name) return -1
+            if (a.name > b.name) return 1
+        })
+    }
+    if ($("#orderBy").value === "4") {
+        jobsArr.sort((a, b) => {
+            if (a.name > b.name) return -1
+            if (a.name < b.name) return 1
+        })
+    }
+    
+    return generateCards(jobsArr)
+}
 
 // Navigation functions
 
@@ -257,7 +344,7 @@ const generateCards = (jobs) => {
             showElement("#jobData")
             showSpinner(".job-info")
             setTimeout(() => {
-                getJobs(jobId).then(data => generateJob(data))
+                getJobs(jobId).then(job => generateJob(job))
             }, 2000);
         })
     }
@@ -344,7 +431,8 @@ const deleteJobFunction = (id) => {
     })
 }
 
-// Navigation events
+
+// Events 
 
 $("#form").addEventListener("submit", (e) => {
     e.preventDefault()
@@ -352,6 +440,22 @@ $("#form").addEventListener("submit", (e) => {
     if (editJobSection) editJob(jobId)
     else addJob()
 })
+
+$(".filter-form").addEventListener("submit", (e) => {
+    e.preventDefault()
+    showSpinner(".card-container")
+    setTimeout(() => {
+        searchByName()
+    }, 2000)
+})
+
+$(".clean-form").addEventListener("click", () => {
+    $(".filter-form").reset()
+    callDataForCards()
+})
+
+
+// Navigation events
 
 $("#openNewJobForm").addEventListener("click", () => {
     hideElement(".main-section")
@@ -370,11 +474,13 @@ $(".cancelFormBtn").addEventListener("click", () => {
     } else goBackHome()
 })
 
-window.addEventListener("scroll", () => {
-    scroll()
-})
 
 // Window events
+
+window.addEventListener("load", () => {
+    callDataForCards()
+    btnReturnFunctions()
+})
 
 window.addEventListener("click", (e) => {
     if (!e.target.matches('.menu-icon')) {
@@ -385,7 +491,6 @@ window.addEventListener("click", (e) => {
     }
 })
 
-window.addEventListener("load", () => {
-    callDataForCards()
-    btnReturnFunctions()
+window.addEventListener("scroll", () => {
+    scroll()
 })
