@@ -203,9 +203,11 @@ const searchByName = () => {
     if ($("#search-name").value === "") {
         getJobs().then((jobs) => filterByLocation(jobs)).catch(() => catchError(".card-container"))
     } else {
-        const search = `?name=${$("#search-name").value}`
-        if (isEmpty(search)) return notFoundJobs()
-        else getJobs(search).then((jobs) => filterByLocation(jobs)).catch(() => catchError(".card-container"))
+        const searchBy = `?name=${$("#search-name").value}`
+        const arrSearched = getJobs(searchBy).then((jobs) => {
+            if (jobs.length !== 0) filterByLocation(arrSearched)
+            else notFoundJobs()
+        }).catch(() => catchError(".card-container"))
     }
 }
 
