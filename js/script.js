@@ -2,8 +2,6 @@
 const $ = (selector) => document.querySelector(selector)
 const $$ = (selector) => document.querySelectorAll(selector)
 
-// 
-
 // Global Helper Functions
 const hideElement = (document) => {
     $(`${document}`).classList.remove("show")
@@ -108,6 +106,22 @@ const deleteJob = (jobId) => {
 
 // Functions
 
+const catchError = (document) => {
+    $(".jobs-found").innerHTML = "0 jobs"
+    $(`${document}`).innerHTML = ""
+    $(`${document}`).innerHTML = `
+        <p class="error">There was an error. Please try again.</p>
+    `
+}
+
+const notFoundJobs = () => {
+    $(".jobs-found").innerHTML = "0 jobs"
+    $(".card-container").innerHTML = ""
+    $(".card-container").innerHTML = `
+        <p class="error">No results found.</p>
+    `
+}
+
 const getTodaysDate = () => {
     const newDate = new Date()
     const today = [newDate.getMonth() + 1, newDate.getDate(), newDate.getFullYear()]
@@ -146,7 +160,7 @@ const callDataForCards = () => {
             setLocationsInSelect(getLocationsOfJobs(jobs))
             searchByName(generateCards(jobs))
         }, 2000);
-    })
+    }).catch(() => catchError(".card-container"))
 }
 
 const editJobInputs = (job) => {
@@ -180,12 +194,18 @@ const saveJob = () => {
 
 // Filter Functions
 
+const isEmpty = (array) => {
+    if (array.length === 0) return true
+    else return false
+} 
+
 const searchByName = () => {
     if ($("#search-name").value === "") {
-        getJobs().then((jobs) => filterByLocation(jobs))
+        getJobs().then((jobs) => filterByLocation(jobs)).catch(() => catchError(".card-container"))
     } else {
         const search = `?name=${$("#search-name").value}`
-        getJobs(search).then((jobs) => filterByLocation(jobs))
+        if (isEmpty(search)) return notFoundJobs()
+        else getJobs(search).then((jobs) => filterByLocation(jobs)).catch(() => catchError(".card-container"))
     }
 }
 
@@ -194,7 +214,8 @@ const filterByLocation = (jobsArr) => {
         return filterByCategory(jobsArr)
     } else {
         const filterByLocation = jobsArr.filter(({ location }) => location === $("#search-location").value)
-        return filterByCategory(filterByLocation)
+        if (isEmpty(filterByLocation)) return notFoundJobs()
+        else return filterByCategory(filterByLocation)
     }
 }
 
@@ -203,7 +224,8 @@ const filterByCategory = (jobsArr) => {
         return filterByExperience(jobsArr)
     } else {
         const filterByCategory = jobsArr.filter(({ category }) => category === $("#category").value)
-        return filterByExperience(filterByCategory)
+        if (isEmpty(filterByCategory)) return notFoundJobs()
+        else return filterByExperience(filterByCategory)
     }
 }
 
@@ -212,7 +234,8 @@ const filterByExperience = (jobsArr) => {
         return filterByRemote(jobsArr)
     } else {
         const filterByExperience = jobsArr.filter(({ experience }) => experience === $("#experience").value)
-        return filterByRemote(filterByExperience)
+        if (isEmpty(filterByExperience)) return notFoundJobs()
+        else return filterByRemote(filterByExperience)
     }
 }
 
@@ -221,7 +244,8 @@ const filterByRemote = (jobsArr) => {
         return filterByEmploymentType(jobsArr)
     } else {
         const filterByRemote = jobsArr.filter(({ remote }) => remote === $("#remote").value)
-        return filterByEmploymentType(filterByRemote)
+        if (isEmpty(filterByRemote)) return notFoundJobs()
+        else return filterByEmploymentType(filterByRemote)
     }
 }
 
@@ -230,7 +254,8 @@ const filterByEmploymentType = (jobsArr) => {
         return orderBy(jobsArr)
     } else {
         const filterByType = jobsArr.filter(({ type }) => type === $("#type").value)
-        return orderBy(filterByType)
+        if (isEmpty(filterByType)) return notFoundJobs()
+        else return orderBy(filterByType)
     }
 }
 
@@ -344,7 +369,7 @@ const generateCards = (jobs) => {
             showElement("#jobData")
             showSpinner(".job-info")
             setTimeout(() => {
-                getJobs(jobId).then(job => generateJob(job))
+                getJobs(jobId).then(job => generateJob(job)).catch(() => catchError(".job-info"))
             }, 2000);
         })
     }
