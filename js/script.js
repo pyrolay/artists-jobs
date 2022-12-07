@@ -204,8 +204,8 @@ const searchByName = () => {
         getJobs().then((jobs) => filterByLocation(jobs)).catch(() => catchError(".card-container"))
     } else {
         const searchBy = `?name=${$("#search-name").value}`
-        const arrSearched = getJobs(searchBy).then((jobs) => {
-            if (jobs.length !== 0) filterByLocation(arrSearched)
+        getJobs(searchBy).then((jobs) => {
+            if (jobs.length !== 0) filterByLocation(jobs)
             else notFoundJobs()
         }).catch(() => catchError(".card-container"))
     }
