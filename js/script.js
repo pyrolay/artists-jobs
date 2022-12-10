@@ -369,6 +369,8 @@ const generateCards = (jobs) => {
             hideElement(".main-section")
             btnReturnFunctions()
             showElement("#jobData")
+            showElement(".job-info")
+            hideElement(".delete-container")
             showSpinner(".job-info")
             setTimeout(() => {
                 getJobs(jobId).then(job => generateJob(job)).catch(() => catchError(".job-info"))
@@ -427,7 +429,7 @@ const generateJob = (jobId) => {
     $(".menu-icon").addEventListener("click", () => showDropdown())
 
     $("#deleteJob").addEventListener("click", () => {
-        deleteJobFunction(id)
+        deleteJobFunction(jobId)
     })
     
     $("#editJob").addEventListener("click", () => {
@@ -441,11 +443,13 @@ const generateJob = (jobId) => {
     })
 }
 
-const deleteJobFunction = (id) => {
+const deleteJobFunction = (jobId) => {
     hideElement(".job-info")
     showElement(".delete-container")
 
-    $(".delete-btn").setAttribute("data-id", id)
+    $(".delete-btn").setAttribute("data-id", jobId.id)
+
+    $(".jobName").innerHTML = `${jobId.name}`
 
     $(".delete-btn").addEventListener("click", () => {
         const id = $(".delete-btn").getAttribute("data-id")
