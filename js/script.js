@@ -201,63 +201,41 @@ const isEmpty = (array) => {
 
 const searchByName = () => {
     if ($("#search-name").value === "") {
-        getJobs().then((jobs) => filterByLocation(jobs)).catch(() => catchError(".card-container"))
+        getJobs().then((jobs) => filterSearchFunction(jobs)).catch(() => catchError(".card-container") )
     } else {
         const searchBy = `?name=${$("#search-name").value}`
         getJobs(searchBy).then((jobs) => {
-            if (jobs.length !== 0) filterByLocation(jobs)
+            if (jobs.length !== 0) filterSearchFunction(jobs)
             else notFoundJobs()
         }).catch(() => catchError(".card-container"))
     }
 }
 
-const filterByLocation = (jobsArr) => {
-    if ($("#search-location").value === "All") {
-        return filterByCategory(jobsArr)
-    } else {
-        const filterByLocation = jobsArr.filter(({ location }) => location === $("#search-location").value)
-        if (isEmpty(filterByLocation)) return notFoundJobs()
-        else return filterByCategory(filterByLocation)
-    }
+const filterSearchFunction = (jobsArr) => {
+    let filterCategory, filterExperience, filterRemote, filterEmploymentType
+
+    const filterLocation = filterBy(jobsArr, $("#search-location"), "location")
+    filterCategory = filterBy(filterLocation, $("#category"), "category")
+
+    if (isEmpty(filterCategory)) return notFoundJobs()
+    else filterExperience = filterBy(filterCategory, $("#experience"), "experience")
+
+    if (isEmpty(filterExperience)) return notFoundJobs()
+    else filterRemote = filterBy(filterExperience, $("#remote"), "remote")
+
+    if (isEmpty(filterRemote)) return notFoundJobs()
+    else filterEmploymentType = filterBy(filterRemote, $("#type"), "type")
+
+    if (isEmpty(filterEmploymentType)) return notFoundJobs()
+    else return orderBy(filterEmploymentType)
 }
 
-const filterByCategory = (jobsArr) => {
-    if ($("#category").value === "All") {
-        return filterByExperience(jobsArr)
+const filterBy = (arr, inputName, search) => {
+    if (inputName.value === "All") {
+        return arr
     } else {
-        const filterByCategory = jobsArr.filter(({ category }) => category === $("#category").value)
-        if (isEmpty(filterByCategory)) return notFoundJobs()
-        else return filterByExperience(filterByCategory)
-    }
-}
-
-const filterByExperience = (jobsArr) => {
-    if ($("#experience").value === "All") {
-        return filterByRemote(jobsArr)
-    } else {
-        const filterByExperience = jobsArr.filter(({ experience }) => experience === $("#experience").value)
-        if (isEmpty(filterByExperience)) return notFoundJobs()
-        else return filterByRemote(filterByExperience)
-    }
-}
-
-const filterByRemote = (jobsArr) => {
-    if ($("#remote").value === "All") {
-        return filterByEmploymentType(jobsArr)
-    } else {
-        const filterByRemote = jobsArr.filter(({ remote }) => remote === $("#remote").value)
-        if (isEmpty(filterByRemote)) return notFoundJobs()
-        else return filterByEmploymentType(filterByRemote)
-    }
-}
-
-const filterByEmploymentType = (jobsArr) => {
-    if ($("#type").value === "All") {
-        return orderBy(jobsArr)
-    } else {
-        const filterByType = jobsArr.filter(({ type }) => type === $("#type").value)
-        if (isEmpty(filterByType)) return notFoundJobs()
-        else return orderBy(filterByType)
+        const filter = arr.filter(job => job[search].toString() === inputName.value)
+        return filter
     }
 }
 
