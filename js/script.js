@@ -375,7 +375,7 @@ const generateJob = (jobId) => {
             <h2>${name}</h2>
             <p>${company}</p>
             <p>${location} <span>📌</span></p>
-            <p class="date">posted ${posted}</p>
+            <p class="date">posted ${formatDate(posted)}</p>
         </div>
         <div class="job-description">
             <p>${salary}</p>
