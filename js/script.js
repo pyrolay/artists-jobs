@@ -3,15 +3,8 @@ const $ = (selector) => document.querySelector(selector)
 const $$ = (selector) => document.querySelectorAll(selector)
 
 // Global Helper Functions
-const hideElement = (document) => {
-    $(`${document}`).classList.remove("show")
-    $(`${document}`).classList.add("hide")
-}
-
-const showElement = (document) => {
-    $(`${document}`).classList.remove("hide")
-    $(`${document}`).classList.add("show")
-}
+const hideElement = (document) => $(`${document}`).classList.add("hide")
+const showElement = (document) => $(`${document}`).classList.remove("hide")
 
 const showSpinner = (document) => {
     $(document).innerHTML = `
@@ -194,10 +187,7 @@ const saveJob = () => {
 
 // Filter Functions
 
-const isEmpty = (array) => {
-    if (array.length === 0) return true
-    else return false
-} 
+const isEmpty = (array) => array.length === 0 
 
 const searchByName = () => {
     if ($("#search-name").value === "") {
@@ -291,11 +281,11 @@ const goBackHome = () => {
     callDataForCards()
 }
 
-const scroll = () => {
-    if ($("#jobData").classList.contains("show") & window.pageYOffset > 90) {
+const scrollFunction = () => {
+    if (!$("#jobData").classList.contains("hide") & window.pageYOffset > 90) {
         $(".menu-icon").style.position = "unset"
         $(".btn-return").style.position = "unset"
-    } else if ($("#jobData").classList.contains("show")) {
+    } else if (!$("#jobData").classList.contains("hide")) {
         $(".menu-icon").style.position = "fixed"
         $(".btn-return").style.position = "fixed"
     }
@@ -501,5 +491,5 @@ window.addEventListener("click", (e) => {
 })
 
 window.addEventListener("scroll", () => {
-    scroll()
+    scrollFunction()
 })
