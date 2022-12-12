@@ -19,6 +19,10 @@ a {
     color: unset;
 }
 
+select, .exit-form {
+    cursor: pointer;
+}
+
 .navbar, .hero-banner {
     font-family: 'Questrial', sans-serif;
     color: white;
@@ -33,9 +37,10 @@ a {
     align-items: center;
     padding: 5px 10px;
     position: fixed;
-    border-bottom: 2px solid #FEA837;
+    border-bottom: 2px solid #84495F;
     box-shadow: rgba(0, 0, 0, 0.16) 0px 3px 6px 0px, rgba(0, 0, 0, 0.23) 0px 3px 6px 0px;
     background: linear-gradient(180deg, rgba(2,0,36,0.6699054621848739) 0%, rgba(50,50,56,0.3169642857142857) 100%);
+    transition: 0.2s;
 }
 
 .navbar .logo {
@@ -48,9 +53,12 @@ a {
 }
 
 .navbar .new-job {
-    color: #FEA837;
-    text-decoration: underline;
+    color: white;
     font-weight: bold;
+}
+
+.navbar .new-job:hover {
+    text-decoration: underline;
 }
 
 .hero-banner {
@@ -84,6 +92,7 @@ a {
     border: 3px solid black;
     box-shadow: 0 0 0 black;
     transition: all 0.2s;
+    cursor: pointer;
 }
 
 .btn:hover {
@@ -95,6 +104,7 @@ a {
 .jobs-section {
     padding: 30px 16px;
     background-color: #fac784;
+    min-height: 100vh;
 }
 
 .search-inputs {
@@ -116,11 +126,11 @@ a {
 .form-btns {
     margin: 10px 0px;
     display: flex;
-    justify-content: space-around;
+    justify-content: space-evenly;
 }
 
 .form-btns .main-submit, .clean-form {
-    width: 40%;
+    width: 200px;
     margin-top: 5px;
     padding: 4px;
     background-color: #84495F;
@@ -131,6 +141,7 @@ a {
 
 .form-btns .clean-form {
     background-color: rgb(207, 57, 46);
+    margin-left: 10px;
 }
 
 .filter-options {
@@ -171,6 +182,7 @@ a {
 }
 
 .jobs-container .jobs-found {
+    text-align: center;
     color: rgb(36, 36, 36);
     font-size: .90rem;
 }
@@ -183,15 +195,16 @@ a {
     padding: 10px;
     padding-left: 16px;
     margin-top: 16px;
-    border: 2px solid #B85B56;
-    border-left: 5px solid #B85B56;
+    border: 2px solid #593e67;
+    border-left: 5px solid #593e67;
     border-radius: 8px;
     background-color: white;
+    transition: 0.2s;
+    cursor: pointer;
 }
 
 .card-container .card .job-title {
     display: flex;
-    align-items: center;
     justify-content: space-between;
     font-size: 14px;
 }
@@ -203,12 +216,13 @@ a {
     cursor: pointer;
 }
 
-.card-container .card .btn-see-job:hover {
-    color: #B85B56;
+.card-container .card:hover {
+    background-color: rgb(246, 246, 246);
+    border-color: #B85B56;
 }
 
-.card-container .card:hover h2 {
-    text-decoration: underline;
+.card-container .card:hover .btn-see-job {
+    color: #B85B56;
 }
 
 .card-container .card .job-type, .card-container .card .tags {
@@ -235,12 +249,19 @@ a {
     background-color: #fac784;
 }
 
+.job-info-container {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+}
+
 .job-info {
     padding: 10px;
     background-color: #fac784;
 }
 
 .job-data .job-image {
+    display: flex;
     height: 150px;
     background-image: linear-gradient( rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5) ), url(../assets/dylan-mullins-RMlrnfuORb4-unsplash.jpg);
     background-size: cover;
@@ -251,22 +272,59 @@ a {
 .job-data .job-image .btn-job {
     padding: 70px 10px;
     display: flex;
-    justify-content: space-between;
     font-size: 1.5rem;
     color: white;
+}
+
+.job-data .job-image .btn-job a {
+    font-size: 2rem;
 }
 
 .job-data .job-title {
     padding: 16px 0;
     border: 2px solid #B85B56;
+    border-top: 5px solid #B85B56;
     border-radius: 8px;
     border-bottom: 1px solid #c4c3c3;
     border-bottom-left-radius: 0px;
     border-bottom-right-radius: 0px;
 }
 
+.job-data .job-title .title {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+
+.job-data .job-title h2 {
+    margin-right: 16px;
+}
+
+.job-management {
+    display: flex;
+    flex-direction: column;
+}
+
+.job-management button {
+    background-color: transparent;
+    border: none;
+    font-size: 1.5rem;
+    cursor: pointer;
+}
+
+.job-management #editJob:hover {
+    color: green;
+}
+
+.job-management #deleteJob:hover {
+    color: red;
+}
+
 .job-data .job-title h2 {
     margin-bottom: 8px;
+    text-decoration: underline;
+    font-size: 1.7rem;
 }
 
 .job-data .job-title .date {
@@ -276,8 +334,8 @@ a {
 }
 
 .job-data .employment-data {
-    text-decoration: underline;
-    text-underline-offset: 3px;
+    font-size: 1.2rem;
+    font-weight: bold;
 }
 
 .job-data .job-description {
@@ -289,13 +347,22 @@ a {
     border-top: unset;
 }
 
-.job-data .job-description p {
+.job-data .job-description .description {
+    margin-top: 20px;
+}
+
+.job-data .job-details {
     margin-bottom: 10px;
 }
 
 .job-data .job-title, .job-data .job-description {
+    padding: 10px;
     background-color: white;
-    padding: 5px;
+}
+
+.delete-section {
+    display: flex;
+    justify-content: center;
 }
 
 .delete-container {
@@ -337,41 +404,9 @@ a {
     color: #FEA837;
 }
 
-.menu-icon, .btn-return {
-    position: fixed;
-}
-
-.dropdown {
-    position: absolute;
-    display: inline-block;
-    right: 0.4em;
-}
-
-.btn-right {
-    right: 0.4em;
-}
-
-.dropdown-menu {
-    display: none;
-    position: relative;
-    flex-direction: column;
-    margin-top: 30px;
-    background-color: #f9f9f9;
-    overflow: auto;
-    box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
-    z-index: 2;
-}
-
-.dropdown-menu a {
-    color: black;
-    padding: 8px 20px;
-    text-decoration: none;
-    display: block;
-    font-size: 16px;
-    border-bottom: 1px solid darkgrey;
-}
-
 .job-form {
+    display: flex;
+    justify-content: center;
     background-color: #fac784;
     padding: 30px 16px;
     padding-top: 80px;
@@ -379,6 +414,7 @@ a {
 }
 
 .job-form form {
+    width: 90%;
     padding: 10px;
     padding-left: 16px;
     border-radius: 8px;
@@ -415,10 +451,25 @@ a {
     width: 90%;
 }
 
+.job-form label {
+    color: black;
+}
+
 .job-form .input-container input, .input-container select, .input-container textarea {
+    border: 0;
+    padding: 0;
+    margin: 0;
+    outline: none;
+    background-color: transparent;
+    box-shadow: none;
+    -webkit-box-shadow: 0 0 0 30px white inset;
+    border-bottom: 3px solid #d0d0d0;
     padding: 5px;
-    border-radius: 8px;
-    border: 1px solid black;
+}
+
+.job-form .input-container input:focus, .input-container select:focus, .input-container textarea:focus {
+    border-image-slice: 1;
+    border-image-source: linear-gradient(to right, #b85b56, #c76e5c, #d58262, #e2966a, #edab74, #eca476, #ea9e78, #e7987b, #ce7a7a, #ac6178, #844e73, #593e67);
 }
 
 .job-form .btn-container {
@@ -432,10 +483,6 @@ a {
 
 .hide {
     display: none;
-}
-
-.show {
-    display: block;
 }
 
 .notVisible {
@@ -539,4 +586,87 @@ footer {
 	100% {
 		transform: rotate(360deg);
 	}
+}
+
+@media (min-width: 500px) {
+    .navbar {
+        justify-content: flex-start;
+        padding-left: 30px;
+    }
+
+    .navbar .logo {
+        margin-right: 20px;
+    }
+
+    .delete-container {
+        width: 500px;
+    }
+}
+
+@media (min-width: 600px) {  
+    .jobs-view {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+    }
+
+    .filter-form {
+        max-width: 80%;
+    }
+
+    .jobs-found {
+        text-align: center;
+    }
+
+    .card-container {
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: space-evenly;
+    }
+
+    .card {
+        width: 270px;
+        margin-right: 10px;
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+    }
+}
+
+@media (min-width: 767px) {
+    .jobs-container {
+        max-width: 1300px;
+    }
+
+    .search-inputs {
+        flex-direction: row;
+    }
+
+    .search-inputs input, .search-inputs select {
+        height: 40px;
+    }
+
+    .search-inputs input {
+        margin-right: 10px;
+    }
+
+    .jobs-found {
+        font-size: 20px;
+    }
+
+    .job-image .btn-job, .job-info, #form {
+        width: 767px;
+    }
+
+    .job-image {
+        justify-content: center;
+    }
+
+    .job-image .btn-job a {
+        font-size: 3rem;
+    }
+
+    .job-form {
+        justify-self: center;
+    }
 }
