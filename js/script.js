@@ -365,9 +365,8 @@ const generateJob = (jobId) => {
             <p class="date job-details">posted ${formatDate(posted)}</p>
         </div>
         <div class="job-description">
-            ${salary !== "" ? 
-            `<p class="employment-data">💵 Salary:</p>
-            <p>👉🏻 ${salary}</p>` : "<p></p>"}
+            ${salary !== "" ? `<p class="employment-data">💵 Salary:</p>
+            <p>👉🏻 ${salary}</p>` : ""}
             <div class="employment">
                 <p class="job-details">
                     <p class="employment-data">⌚ Type:</p>
