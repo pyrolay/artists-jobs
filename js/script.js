@@ -147,7 +147,7 @@ const editJobInputs = (job) => {
     setCheckedToSameValue("experience", experience)
     $("#job-salary").value = salary
     setCheckedToSameValue("remote", remote)
-    $("#job-type").value = type
+    $("#job-type").checked = type
 }
 
 const saveJob = () => {
