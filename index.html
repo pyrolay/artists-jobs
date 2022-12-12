@@ -5,6 +5,7 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="css/style.css">
+    <link type="image/png" sizes="96x96" rel="icon" href="assets/icons8-art-48.png">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.1/css/all.min.css" integrity="sha512-MV7K8+y+gLIBoVD59lQIYicR65iaqukzvf/nwasF0nqhPay5w/9lJmVM2hMDcnK1OnMGCdVK+iQrJ7lzPJQd1w==" crossorigin="anonymous" referrerpolicy="no-referrer"/>
@@ -15,7 +16,7 @@
     <header>
         <nav class="navbar">
             <a href="" class="logo">
-                <img src="assets/icons8-paint-palette-with-brush-48.png" alt="logo">
+                <img src="assets/icons8-art-96.png" alt="logo">
             </a>
             <a href="#openForm" class="new-job" id="openNewJobForm">Add new job</a>
         </nav>
@@ -93,12 +94,16 @@
         <div class="job-image">
             <div class="btn-job"></div>
         </div>
-        <div class="job-info"></div>
-        <div class="delete-container hide">
-            <p>Are you sure you want to delete the <span class="jobName"></span> job?</p>
-            <div class="delete-btns">
-                <button class="delete-btn btn">Delete</button>
-                <button class="cancel-btn btn">Cancel</button>
+        <div class="job-info-container">
+            <div class="job-info"></div>
+        </div>
+        <div class="delete-section hide">
+            <div class="delete-container">
+                <p>Are you sure you want to delete the <span class="jobName"></span> job?</p>
+                <div class="delete-btns">
+                    <button class="delete-btn btn">Delete</button>
+                    <button class="cancel-btn btn">Cancel</button>
+                </div>
             </div>
         </div>
     </section>

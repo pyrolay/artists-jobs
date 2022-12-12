@@ -3,15 +3,8 @@ const $ = (selector) => document.querySelector(selector)
 const $$ = (selector) => document.querySelectorAll(selector)
 
 // Global Helper Functions
-const hideElement = (document) => {
-    $(`${document}`).classList.remove("show")
-    $(`${document}`).classList.add("hide")
-}
-
-const showElement = (document) => {
-    $(`${document}`).classList.remove("hide")
-    $(`${document}`).classList.add("show")
-}
+const hideElement = (document) => $(`${document}`).classList.add("hide")
+const showElement = (document) => $(`${document}`).classList.remove("hide")
 
 const showSpinner = (document) => {
     $(document).innerHTML = `
@@ -194,10 +187,7 @@ const saveJob = () => {
 
 // Filter Functions
 
-const isEmpty = (array) => {
-    if (array.length === 0) return true
-    else return false
-} 
+const isEmpty = (array) => array.length === 0 
 
 const searchByName = () => {
     if ($("#search-name").value === "") {
@@ -266,15 +256,6 @@ const orderBy = (jobsArr) => {
 
 // Navigation functions
 
-const showDropdown = () => {
-    if ($(".dropdown-menu").classList.contains("show")) {
-        $(".dropdown-menu").classList.remove("show")
-    } else {
-        $(".dropdown-menu").classList.add("show")
-    }
-
-}
-
 const setBtnReturn = () => {
     $(".btn-return").addEventListener("click", () => {
         $("html").style = "scroll-behavior: smooth"
@@ -291,13 +272,12 @@ const goBackHome = () => {
     callDataForCards()
 }
 
-const scroll = () => {
-    if ($("#jobData").classList.contains("show") & window.pageYOffset > 90) {
-        $(".menu-icon").style.position = "unset"
-        $(".btn-return").style.position = "unset"
-    } else if ($("#jobData").classList.contains("show")) {
-        $(".menu-icon").style.position = "fixed"
-        $(".btn-return").style.position = "fixed"
+const scrollChangeNavbarColor = () => {
+    if (window.pageYOffset > 150) {
+        $(".navbar").style.backgroundColor = "#84495F"
+        $(".navbar").style.borderBottom = "2px solid black"
+    } else {
+        $(".navbar").removeAttribute("style")
     }
 }
 
@@ -318,10 +298,10 @@ const generateCards = (jobs) => {
     for (const job of jobs) {
         const { category, company, experience, id, location, name, type, posted, remote } = job
         $(".card-container").innerHTML += `
-            <div class="card">
+            <div class="card" id="${id}">
                 <div class="job-title">
                     <h2>${name}</h2>
-                    <a href="#jobData" class="btn-see-job" id="${id}">
+                    <a href="#jobData" class="btn-see-job">
                         <i class="fa-solid fa-arrow-right"></i>
                     </a>
                 </div>
@@ -338,17 +318,15 @@ const generateCards = (jobs) => {
         `
     }
 
-    const btnSeeJob = $$(".btn-see-job")
-
-    for (const btn of btnSeeJob) {
-        btn.addEventListener("click", () => {
-            const jobId = btn.id
+    for (const card of $$(".card")) {
+        card.addEventListener("click", () => {
+            const jobId = card.id
             $("html").style = "scroll-behavior: unset"
             hideElement(".main-section")
             btnReturnFunctions()
             showElement("#jobData")
             showElement(".job-info")
-            hideElement(".delete-container")
+            hideElement(".delete-section")
             showSpinner(".job-info")
             setTimeout(() => {
                 getJobs(jobId).then(job => generateJob(job)).catch(() => catchError(".job-info"))
@@ -362,13 +340,6 @@ const btnReturnFunctions = () => {
         <a href="#jobs-section" class="btn-return">
             <i class="fa-solid fa-arrow-left"></i>
         </a>
-        <div class="dropdown notVisible">
-            <i class="menu-icon btn-right fa-solid fa-ellipsis-vertical"></i>
-            <div id="dropdown-menu" class="dropdown-menu">
-                <a id="editJob">Edit</a>
-                <a id="deleteJob">Delete</a>
-            </div>
-        </div>
     `
     setBtnReturn()
 }
@@ -376,35 +347,44 @@ const btnReturnFunctions = () => {
 const generateJob = (jobId) => {
     const { company, name, description, location, experience, salary, posted, remote, type, id } = jobId
 
-    $(".dropdown").classList.remove("notVisible")
-    $("#editJob").setAttribute("data-id", id)
-    $("#deleteJob").setAttribute("data-id", id)
-
     $(".job-info").innerHTML = `
         <div class="job-title">
-            <h2>${name}</h2>
-            <p>${company}</p>
-            <p>${location} <span>📌</span></p>
-            <p class="date">posted ${posted}</p>
+            <div class="title">
+                <h2>${name}</h2>
+                <div class="job-management">
+                    <button id="editJob" data-id="${id}">
+                        <i class="fa-regular fa-pen-to-square"></i>
+                    </button>
+                    <button id="deleteJob" data-id="${id}">
+                        <i class="fa-solid fa-trash"></i>
+                    </button>
+                </div>
+            </div>
+            <p class="job-details">${company} <span>🏢</span></p>
+            <p class="job-details">${location} <span>📌</span></p>
+            <p class="date job-details">posted ${formatDate(posted)}</p>
         </div>
         <div class="job-description">
-            <p>${salary}</p>
+            ${salary !== "" ? 
+            `<p class="employment-data">💵 Salary:</p>
+            <p>👉🏻 ${salary}</p>` : "<p></p>"}
             <div class="employment">
-                <p>
-                    <span class="employment-data">Type:</span> <span>${type}</span>
+                <p class="job-details">
+                    <p class="employment-data">⌚ Type:</p>
+                    <p>👉🏻 ${type}</p>
                 </p>
-                <p>
-                    <span class="employment-data">Remote:</span> <span>${remote ? "Yes" : "No"}</span>
+                <p class="job-details">
+                    <p class="employment-data">👩🏻‍💻 Remote:</p>
+                    <p>👉🏻 ${remote ? "Yes" : "No"}</p>
                 </p>
-                <p>
-                    <span class="employment-data">Experience:</span> <span>${experience ? "Needed" : "No needed"}</span>
+                <p class="job-details">
+                    <p class="employment-data">👩🏻‍💼 Experience:</p>
+                    <p>👉🏻 ${experience ? "Needed" : "No needed"}</p>
                 </p>
             </div>
-            <p>${description}</p>
+            <p class="description">${description}</p>
         </div>
     `
-
-    $(".menu-icon").addEventListener("click", () => showDropdown())
 
     $("#deleteJob").addEventListener("click", () => {
         deleteJobFunction(jobId)
@@ -423,7 +403,7 @@ const generateJob = (jobId) => {
 
 const deleteJobFunction = (jobId) => {
     hideElement(".job-info")
-    showElement(".delete-container")
+    showElement(".delete-section")
 
     $(".delete-btn").setAttribute("data-id", jobId.id)
 
@@ -435,7 +415,7 @@ const deleteJobFunction = (jobId) => {
     })
 
     $(".cancel-btn").addEventListener("click", () => {
-        hideElement(".delete-container")
+        hideElement(".delete-section")
         showElement(".job-info")
     })
 }
@@ -501,5 +481,5 @@ window.addEventListener("click", (e) => {
 })
 
 window.addEventListener("scroll", () => {
-    scroll()
+    scrollChangeNavbarColor()
 })
