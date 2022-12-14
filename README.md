@@ -1,4 +1,4 @@
-# 👉🏻🔗 [for Artist](https://pyrolay.github.io/artists-jobs/)
+# 👉🏻🔗 [for Artists](https://pyrolay.github.io/artists-jobs/)
 
 > A website focused on artists to find their ideal job.
 
@@ -33,7 +33,7 @@
     - Company name.
     - Location.
     - Posted date.
-    - Salary (If the company want to include it).
+    - Salary (If the company wants to include it).
     - Type of employment.
     - If it's remote.
     - If requires experience.
@@ -45,7 +45,7 @@
 - You can choose! Do you want to edit this job or do you want to delete it? 
     - Clicking the pencil🖊 button opens a new form to edit the current job. While clicking trash🗑 button, it asks you if you are sure to delete it, be careful! 
 
-<img src="https://i.imgur.com/azYgUqO.png" alt="Section that show the information about the job." width="450"/>
+<img src="https://i.imgur.com/azYgUqO.png" alt="Section that show the information about the job." width="600"/>
 
 ## Status
 ☑️ Finished
